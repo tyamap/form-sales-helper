@@ -22,7 +22,6 @@ export default function Options(): JSX.Element {
     setTemplates(data)
   };
 
-
   return (
     <main className="px-4 py-10 text-center text-gray-700">
       <h1 className="text-lg">Options</h1>
