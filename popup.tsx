@@ -1,7 +1,7 @@
 import { useStorage } from "@plasmohq/storage/hook"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import "./style.css"
 
 export default function Popup(): JSX.Element {
@@ -30,8 +30,8 @@ export default function Popup(): JSX.Element {
       <div>
         <div className="mb-4">
           <div className="mt-1">
-            <button onClick={() => copyContent(`${basicInfo.familyName} ${basicInfo.givenName}`)}>
-              <><span className="opacity-50">名前:</span> {`${basicInfo.familyName} ${basicInfo.givenName}`}</>
+            <button onClick={() => copyContent(`${basicInfo?.familyName} ${basicInfo?.givenName}`)}>
+              <><span className="opacity-50">名前:</span> {`${basicInfo?.familyName} ${basicInfo?.givenName}`}</>
             </button>
           </div>
           {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
