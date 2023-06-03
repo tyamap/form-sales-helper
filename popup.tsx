@@ -37,7 +37,12 @@ export default function Popup(): JSX.Element {
           {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
             <div className="mt-1" key={k}>
               <button onClick={() => copyContent(basicInfo ? basicInfo[k] : '')}>
-                <><span className="opacity-50">{basicInfoDisplay[k]}:</span> {basicInfo && basicInfo[k]}</>
+                {basicInfo && basicInfo[k] &&
+                  <p className="truncate">
+                    <span className="opacity-50">{basicInfoDisplay[k]}:</span>
+                    {basicInfo[k].length <= 26 ? basicInfo[k] : `${basicInfo[k].substring(0, 26)}...`}
+                  </p>
+                }
               </button>
             </div>
           ))}
