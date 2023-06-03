@@ -2,7 +2,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
 import { useState } from "react"
-import "./style.css"
+import "~/style.css"
 
 export default function Popup(): JSX.Element {
   const [basicInfo] = useStorage<BasicInfo>('basic-info')
