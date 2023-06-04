@@ -2,9 +2,10 @@ import { fillAndHighlight } from "./utils"
 
 export const autofillTel = async (form: HTMLFormElement, tel: string) => {
   const input = getTelInput(form)
-  console.log('[FSH] Tel', input ? input : 'Tel INPUT not found')
   if (input) {
     fillAndHighlight(input, tel)
+  } else {
+    console.log('[FSH]', 'Tel INPUT not found')
   }
 }
 

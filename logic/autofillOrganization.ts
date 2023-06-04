@@ -2,9 +2,11 @@ import { fillAndHighlight } from "./utils"
 
 export const autofillOrganization = async (form: HTMLFormElement, organization: string) => {
   const input = getOrganizationInput(form)
-  console.log('[FSH] Organization', input ? input : 'Organization INPUT not found')
   if (input) {
     fillAndHighlight(input, organization)
+  
+  } else {
+    console.log('[FSH]', 'Organization INPUT not found')
   }
 }
 
