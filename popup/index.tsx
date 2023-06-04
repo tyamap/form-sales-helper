@@ -26,8 +26,13 @@ export default function Popup(): JSX.Element {
   return (
     <main className="w-[300px] px-4 py-5 text-center text-gray-700">
       <h1 className="text-lg mb-2 text-teal-700 font-bold">Form Sales Helper</h1>
-      <p className="mb-6">各項目をクリックで<br />コピーできます</p>
-      <div>
+      {(basicInfo || templates) &&
+        <div className="mb-2">
+          <p>各項目をクリックで<br />コピーできます</p>
+          <span className={`text-teal-500 ${showCopied ? 'opacity-100' : 'opacity-0'} transition`}>コピーしました</span>
+        </div>
+      }
+      {basicInfo &&
         <div className="mb-4">
           <div className="mt-1">
             <button onClick={() => copyContent(`${basicInfo?.familyName} ${basicInfo?.givenName}`)}>
@@ -47,6 +52,8 @@ export default function Popup(): JSX.Element {
             </div>
           ))}
         </div>
+      }
+      {templates &&
         <div className="mb-4">
           {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
             <div className="mt-2 relative group" key={k}>
@@ -63,8 +70,7 @@ export default function Popup(): JSX.Element {
             </div>
           ))}
         </div>
-      </div>
-      <span className={`text-teal-500 ${showCopied ? 'opacity-100' : 'opacity-0'} transition`}>コピーしました</span>
+      }
       <div>
         <button className="bg-teal-500 roundedbg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
           onClick={openOptionPage}
