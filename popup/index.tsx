@@ -32,45 +32,43 @@ export default function Popup(): JSX.Element {
           <span className={`text-teal-500 ${showCopied ? 'opacity-100' : 'opacity-0'} transition`}>コピーしました</span>
         </div>
       }
-      {basicInfo &&
-        <div className="mb-4">
-          <div className="mt-1">
-            <button onClick={() => copyContent(`${basicInfo?.familyName} ${basicInfo?.givenName}`)}>
-              <><span className="opacity-50">名前:</span> {`${basicInfo?.familyName} ${basicInfo?.givenName}`}</>
+      <div className="mb-4">
+        {basicInfo && basicInfo.familyName && basicInfo.givenName &&
+          <div className="mb-1">
+            <button onClick={() => copyContent(`${basicInfo.familyName} ${basicInfo.givenName}`)}>
+              <><span className="opacity-50">名前:</span> {`${basicInfo.familyName} ${basicInfo.givenName}`}</>
             </button>
           </div>
-          {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
-            <div className="mt-1" key={k}>
+        }
+        {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
+          <>{basicInfo && basicInfo[k] &&
+            <div className="mb-1" key={k}>
               <button onClick={() => copyContent(basicInfo ? basicInfo[k] : '')}>
-                {basicInfo && basicInfo[k] &&
-                  <p className="truncate">
-                    <span className="opacity-50">{basicInfoDisplay[k]}:</span>
-                    {basicInfo[k].length <= 26 ? basicInfo[k] : `${basicInfo[k].substring(0, 26)}...`}
-                  </p>
-                }
+                <p className="truncate">
+                  <span className="opacity-50">{basicInfoDisplay[k]}:</span>
+                  {basicInfo[k].length <= 26 ? basicInfo[k] : `${basicInfo[k].substring(0, 26)}...`}
+                </p>
               </button>
             </div>
-          ))}
-        </div>
-      }
-      {templates &&
-        <div className="mb-4">
-          {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
-            <div className="mt-2 relative group" key={k}>
-              {templates && templates[k] &&
-                <span
-                  className="bg-gray-500 text-white rounded p-2 absolute w-72 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none"
-                >
-                  {templates[k].length <= 60 ? templates[k] : `${templates[k].substring(0, 60)}...`}
-                </span>
-              }
+          }</>
+        ))}
+      </div>
+      <div className="mb-4">
+        {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
+          <>{templates && templates[k] &&
+            <div className="mb-2 relative group" key={k}>
+              <span
+                className="bg-gray-500 text-white rounded p-2 absolute w-72 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none"
+              >
+                {templates[k].length <= 60 ? templates[k] : `${templates[k].substring(0, 60)}...`}
+              </span>
               <button onClick={() => copyContent(templates ? templates[k] : '')}>
                 <span>{templatesDisplay && templatesDisplay[k]}</span>
               </button>
             </div>
-          ))}
-        </div>
-      }
+          }</>
+        ))}
+      </div>
       <div>
         <button className="bg-teal-500 roundedbg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
           onClick={openOptionPage}
