@@ -4,22 +4,25 @@ import { useForm } from "react-hook-form";
 import { useStorage } from "@plasmohq/storage/hook"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
+import { Config } from '~entities/Config';
 import "~/style.css"
 
-type OptionForm = BasicInfo & Templates
+type OptionForm = BasicInfo & Templates & Config
 
 export default function Options(): JSX.Element {
   const [basicInfo, setBasicInfo] = useStorage<BasicInfo>('basic-info')
   const [templates, setTemplates] = useStorage<Templates>('templates')
+  const [config, setConfig] = useStorage<Config>('config')
   const form = useForm<OptionForm>({ defaultValues: { ...basicInfo, ...templates } })
 
   useEffect(() => {
-    form.reset({ ...basicInfo, ...templates })
+    form.reset({ ...basicInfo, ...templates, ...config })
   }, [basicInfo, templates])
 
   const onSubmit = (data: OptionForm) => {
     setBasicInfo(data)
     setTemplates(data)
+    setConfig(data)
   };
 
   return (
