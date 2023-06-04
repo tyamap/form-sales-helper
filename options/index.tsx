@@ -39,6 +39,13 @@ export default function Options(): JSX.Element {
           ))}
         </div>
         <div className="mb-4">
+          <label className="relative inline-flex items-center mb-5 cursor-pointer">
+            <span className="mr-2">規約の自動チェック</span>
+            <input type="checkbox" className="sr-only peer" {...form.register('autoCheck')} />
+            <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[18px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-400"></div>
+          </label>
+        </div>
+        <div className="mb-4">
           {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
             <div className="mt-2" key={k}>
               <label>

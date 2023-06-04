@@ -10,6 +10,7 @@ import { autofillTemplate } from "~logic/autofillTemplate"
 import type { PlasmoCSConfig } from "plasmo"
 import { autofillOrganization } from "~logic/autofillOrganization"
 import { autofillTel } from "~logic/autofillTel"
+import { autocheckTerms } from "~logic/autocheckTerm"
 
 export const config: PlasmoCSConfig = {
   matches: ["*://*/contact*", "*://*/inquiry*", "*://*/inquiries*"]
@@ -40,6 +41,12 @@ window.addEventListener("load", async () => {
 
       // 問合せ内容の自動入力
       autofillTemplate(form, templates[templates.defaultTemplate])
+      
+      // 規約の自動チェック
+      if (basicInfo.autoCheck) {
+        autocheckTerms(form)
+      }
+
     })
   }
 

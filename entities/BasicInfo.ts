@@ -4,6 +4,7 @@ export type BasicInfo = {
   email: string;
   tel: string;
   organization: string;
+  autoCheck: boolean;
 }
 export const basicInfoDisplay = {
   familyName: '姓',
