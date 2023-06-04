@@ -50,6 +50,14 @@ export default function Options(): JSX.Element {
             </div>
           ))}
         </div>
+        <div className="mb-4">
+          <label className="mr-2" htmlFor="default-template">デフォルトのテンプレート</label>
+          <select id="default-template" className="border runded border-gray-500 py-1 px-2" {...form.register('defaultTemplate')}>
+            {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
+              <option key={`option-${k}`} value={k}>{templatesDisplay[k]}</option>
+            ))}
+          </select>
+        </div>
         <button className='bg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2' type="submit">保存</button>
       </form>
     </main>

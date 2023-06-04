@@ -37,8 +37,9 @@ window.addEventListener("load", async () => {
       autofillTel(form, basicInfo.email)
       // 会社名フィールドの自動入力
       autofillOrganization(form, basicInfo.organization)
+
       // 問合せ内容の自動入力
-      autofillTemplate(form, templates.template1)
+      autofillTemplate(form, templates[templates.defaultTemplate])
     })
   }
 
