@@ -1,13 +1,21 @@
 import { useStorage } from "@plasmohq/storage/hook"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "~/style.css"
 
 export default function Popup(): JSX.Element {
   const [basicInfo] = useStorage<BasicInfo>('basic-info')
   const [templates] = useStorage<Templates>('templates')
   const [showCopied, setShowCopied] = useState(false)
+  const [currentURL, setCurrentURL] = useState('')
+
+  useEffect(() => {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+      const url = tabs[0]?.url;
+      setCurrentURL(url)
+    });
+  }, [])
 
   const copyContent = (value: string) => {
     navigator.clipboard.writeText(value).then(
@@ -24,7 +32,7 @@ export default function Popup(): JSX.Element {
   }
 
   return (
-    <main className="w-[300px] px-4 py-5 text-center text-gray-700">
+    <main className="w-[300px] p-4 text-center text-gray-700">
       <h1 className="text-lg mb-2 text-teal-700 font-bold">Form Sales Helper</h1>
       {(basicInfo || templates) &&
         <div className="mb-2">
@@ -53,7 +61,7 @@ export default function Popup(): JSX.Element {
           }</>
         ))}
       </div>
-      <div className="mb-4">
+      <div className="mb-2">
         {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
           <>{templates && templates[k] &&
             <div className="mb-2 relative group" key={k}>
@@ -75,6 +83,14 @@ export default function Popup(): JSX.Element {
         >
           設定
         </button>
+      </div>
+      <div className="text-right mt-4">
+        <a
+          className="underline text-gray-400"
+          href={`https://docs.google.com/forms/d/e/1FAIpQLSdtC-jM2WUO_JECXAL0N44oYlvIFYVcsoucKqGx-98-Vxaqhg/viewform?usp=pp_url&entry.153732000=${currentURL}`}
+          target="_blank">
+          非対応サイトを報告
+        </a>
       </div>
     </main >
   )
