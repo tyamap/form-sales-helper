@@ -27,7 +27,8 @@ export default function Options(): JSX.Element {
 
   return (
     <main className="px-4 py-10 text-center text-gray-700">
-      <h1 className="text-lg">Options</h1>
+      <h1 className="text-lg text-teal-700 font-bold">Form Sales Helper</h1>
+      <h2 className="text-md mb-4 text-teal-700 font-bold">Options</h2>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-4">
           {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
@@ -61,7 +62,7 @@ export default function Options(): JSX.Element {
           ))}
         </div>
         <div className="mb-4">
-          <label className="mr-2" htmlFor="default-template">デフォルトのテンプレート</label>
+          <label className="mr-2" htmlFor="default-template">デフォルト</label>
           <select id="default-template" className="border runded border-gray-500 py-1 px-2" {...form.register('defaultTemplate')}>
             {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
               <option key={`option-${k}`} value={k}>{templatesDisplay[k]}</option>

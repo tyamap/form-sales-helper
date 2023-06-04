@@ -25,7 +25,7 @@ export default function Popup(): JSX.Element {
 
   return (
     <main className="w-[300px] px-4 py-5 text-center text-gray-700">
-      <h1 className="text-lg mb-2">Form Sales Helper</h1>
+      <h1 className="text-lg mb-2 text-teal-700 font-bold">Form Sales Helper</h1>
       <p className="mb-6">各項目をクリックで<br />コピーできます</p>
       <div>
         <div className="mb-4">
