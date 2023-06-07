@@ -14,6 +14,7 @@ const getOrganizationInput = (form: HTMLFormElement) => {
   const input =
     form.querySelector<HTMLInputElement>('input[name*=organization]') || 
     form.querySelector<HTMLInputElement>('input[name*=affiliation]') ||
-    form.querySelector<HTMLInputElement>('input[name*=office]')
+    form.querySelector<HTMLInputElement>('input[name*=office]') ||
+    form.querySelector<HTMLInputElement>('input[name*=company]')
   return input
 }
