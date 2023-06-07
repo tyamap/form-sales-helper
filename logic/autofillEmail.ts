@@ -4,8 +4,6 @@ export const autofillEmail = async (form: HTMLFormElement, email: string) => {
   const input = getEmailInput(form)
   if (input) {
     fillAndHighlight(input, email)
-  } else {
-    console.log('[FSH]', 'Email INPUT not found')
   }
 }
 

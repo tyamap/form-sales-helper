@@ -5,8 +5,6 @@ export const autofillDepartment = async (form: HTMLFormElement, department: stri
   if (input) {
     fillAndHighlight(input, department)
   
-  } else {
-    console.log('[FSH]', 'Department INPUT not found')
   }
 }
 

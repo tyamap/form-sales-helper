@@ -4,9 +4,6 @@ export const autofillOrganization = async (form: HTMLFormElement, organization: 
   const input = getOrganizationInput(form)
   if (input) {
     fillAndHighlight(input, organization)
-  
-  } else {
-    console.log('[FSH]', 'Organization INPUT not found')
   }
 }
 

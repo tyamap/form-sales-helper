@@ -4,8 +4,6 @@ export const autofillName = async (form: HTMLFormElement, familyName: string, gi
   const input = getNameInput(form)
   if (input) {
     fillAndHighlight(input, `${familyName} ${givenName}`)
-  } else {
-    console.log('[FSH]', 'Name INPUT not found')
   }
 }
 

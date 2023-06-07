@@ -6,8 +6,6 @@ export const autocheckTerms = async (form: HTMLFormElement) => {
       input.parentElement.style.backgroundColor = '#ccfbf1'
       input.parentElement.style.border = '2px solid #115e59'
     })
-  } else {
-    console.log('[FSH] Term', 'Term INPUT not found')
   }
 }
 
