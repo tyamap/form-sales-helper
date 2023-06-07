@@ -1,33 +1,19 @@
+# Form Sales Helper
+## 問合せフォームを使った営業業務を効率化する拡張機能
+[Chrome ストア](https://chrome.google.com/webstore/detail/form-sales-helper/leleghllfoabojmggnnhgjbelipanecf)  
+[リクエストフォーム](https://docs.google.com/forms/d/e/1FAIpQLSdtC-jM2WUO_JECXAL0N44oYlvIFYVcsoucKqGx-98-Vxaqhg/viewform)
+
+### ● 基本情報の登録
+設定ページで、名前やメールアドレス、企業名などの情報と、テンプレートメッセージを登録できます。
+
+### ● ボタンでコピー
+ポップアップメニューから、登録した情報をワンクリックでコピーできます。
+
+### ● 自動入力
+問合せフォームがあるページを開いたときに、登録した情報を自動で入力し、ハイライト表示します。  
+※自動入力が機能するページは、URLに `contact` や `inquiry` が含まれるページのみです。
+
+### ● 改善リクエスト
+フォーム自動入力が機能しないサイトがありましたら、ポップアップ右下「非対応のサイトを報告」リンクのフォームから改善リクエストを送ってください。
+
 This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-pnpm dev
-# or
-npm run dev
-```
-
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
-
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
