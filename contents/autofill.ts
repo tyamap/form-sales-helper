@@ -12,6 +12,7 @@ import { autofillOrganization } from "~logic/autofillOrganization"
 import { autofillTel } from "~logic/autofillTel"
 import { autocheckTerms } from "~logic/autocheckTerm"
 import { Config } from "~entities/Config"
+import { autofillDepartment } from "~logic/autofillDepartment"
 
 export const config: PlasmoCSConfig = {
   matches: ["*://*/contact*", "*://*/inquiry*", "*://*/inquiries*"]
@@ -40,6 +41,8 @@ window.addEventListener("load", async () => {
       autofillTel(form, basicInfo.email)
       // 会社名フィールドの自動入力
       autofillOrganization(form, basicInfo.organization)
+      // 部署名フィールドの自動入力
+      autofillDepartment(form, basicInfo.department)
 
       // 問合せ内容の自動入力
       autofillTemplate(form, templates[config?.defaultTemplate || 'template1'])
