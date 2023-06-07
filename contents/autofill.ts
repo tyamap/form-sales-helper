@@ -38,7 +38,7 @@ window.addEventListener("load", async () => {
       // Emailフィールドの自動入力
       autofillEmail(form, basicInfo.email)
       // Telフィールドの自動入力
-      autofillTel(form, basicInfo.email)
+      autofillTel(form, basicInfo.tel)
       // 会社名フィールドの自動入力
       autofillOrganization(form, basicInfo.organization)
       // 部署名フィールドの自動入力
