@@ -1,13 +1,12 @@
 export { }
 
+import type { PlasmoCSConfig } from "plasmo"
 import { Storage } from "@plasmohq/storage"
 import { BasicInfo } from "~entities/BasicInfo"
 import { Templates } from "~entities/Templates"
 import { autofillEmail } from "~logic/autofillEmail"
 import { autofillName } from '~logic/autofillName'
 import { autofillTemplate } from "~logic/autofillTemplate"
-
-import type { PlasmoCSConfig } from "plasmo"
 import { autofillOrganization } from "~logic/autofillOrganization"
 import { autofillTel } from "~logic/autofillTel"
 import { autocheckTerms } from "~logic/autocheckTerm"
@@ -33,22 +32,31 @@ window.addEventListener("load", async () => {
     // 1フォームずつ処置
     Array(forms.length).fill('').forEach((_, i) => {
       const form = forms[i]
+
+      if (!basicInfo) return
       // 名前フィールドの自動入力
-      autofillName(form, basicInfo.familyName, basicInfo.givenName)
+      (basicInfo.familyName || basicInfo.givenName) &&
+        autofillName(form, basicInfo.familyName, basicInfo.givenName)
       // Emailフィールドの自動入力
-      autofillEmail(form, basicInfo.email)
+      basicInfo.email &&
+        autofillEmail(form, basicInfo.email)
       // Telフィールドの自動入力
-      autofillTel(form, basicInfo.tel)
+      basicInfo.tel &&
+        autofillTel(form, basicInfo.tel)
       // 会社名フィールドの自動入力
-      autofillOrganization(form, basicInfo.organization)
+      basicInfo.organization &&
+        autofillOrganization(form, basicInfo.organization)
       // 部署名フィールドの自動入力
-      autofillDepartment(form, basicInfo.department)
+      basicInfo.department &&
+        autofillDepartment(form, basicInfo.department)
 
       // 問合せ内容の自動入力
-      autofillTemplate(form, templates[config?.defaultTemplate || 'template1'])
+      const defaultKey = config?.defaultTemplate || 'template1'
+      templates && templates[defaultKey] &&
+        autofillTemplate(form, templates[defaultKey])
 
       // 規約の自動チェック
-      if (config.autoCheck) {
+      if (config?.autoCheck) {
         autocheckTerms(form)
       }
 
