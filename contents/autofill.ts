@@ -1,5 +1,3 @@
-export { }
-
 import type { PlasmoCSConfig } from "plasmo"
 import { Storage } from "@plasmohq/storage"
 import { BasicInfo } from "~entities/BasicInfo"
@@ -17,9 +15,7 @@ export const config: PlasmoCSConfig = {
   matches: ["*://*/contact*", "*://*/inquiry*", "*://*/inquiries*"]
 }
 
-
 window.addEventListener("load", async () => {
-
   console.log('[FSH]', `Found ${document.forms.length} forms.`)
   if (document.forms.length > 0) {
     const forms = document.forms;
