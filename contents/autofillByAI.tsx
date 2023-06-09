@@ -9,6 +9,7 @@ const AutofillByAI = () => {
         const copy = formElem.cloneNode(true) as HTMLFormElement
         cleanUpFormElement(copy)
         // TODO: GPTリクエストAPIを実行
+        res.send('成功しました')
       } else {
         res.send('問合せフォームが見つかりません')
       }
@@ -25,6 +26,7 @@ const cleanUpFormElement = (formElem: HTMLFormElement) => {
   formElem.querySelectorAll('*').forEach((element) => {
     cleanUpAttributes(element)
   })
+  removeUnnecessaryTags(formElem)
   console.log(formElem.outerHTML.length, formElem.outerHTML)
 }
 
@@ -37,12 +39,26 @@ const cleanUpAttributes = (element: Element) => {
       attributeName !== "id" &&
       attributeName !== "class" &&
       attributeName !== "type" &&
+      attributeName !== "placeholder" &&
       attributeName !== "name"
     ) {
       element.removeAttribute(attributeName);
     }
   }
   return element;
+}
+
+const removeUnnecessaryTags = (formElem: HTMLFormElement) => {
+  const unnecessaryTags = ['script', 'svg']
+
+  unnecessaryTags.forEach((tagName) => {
+    const targets = formElem.querySelectorAll(tagName);
+    // 要素を削除
+    targets.forEach((target) => {
+      target.parentNode.removeChild(target);
+    });
+  })
+
 }
 
 export default AutofillByAI
