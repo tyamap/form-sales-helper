@@ -10,6 +10,7 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@plasmohq/messaging": "^0.3.3",
     "@plasmohq/storage": "^1.6.1",
     "plasmo": "0.74.2",
     "react": "18.2.0",
