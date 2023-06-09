@@ -1,4 +1,5 @@
 import { useStorage } from "@plasmohq/storage/hook"
+import { sendToBackground, sendToContentScript } from "@plasmohq/messaging"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
 import { useEffect, useState } from "react"
@@ -29,6 +30,13 @@ export default function Popup(): JSX.Element {
 
   const openOptionPage = () => {
     chrome.runtime.openOptionsPage()
+  }
+
+  const startAutofillByAI = async () => {
+    const res = await sendToContentScript({
+      name: "autofillByAI"
+    })
+    alert(res)
   }
 
   return (
@@ -78,10 +86,17 @@ export default function Popup(): JSX.Element {
         ))}
       </div>
       <div>
-        <button className="bg-teal-500 roundedbg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
+        <button className="bg-teal-500 rounded bg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
           onClick={openOptionPage}
         >
           設定
+        </button>
+      </div>
+      <div>
+        <button className="bg-teal-500 rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2"
+          onClick={startAutofillByAI}
+        >
+          AI実行(β版)
         </button>
       </div>
       <div className="text-right mt-4">
@@ -92,6 +107,7 @@ export default function Popup(): JSX.Element {
           非対応サイトを報告
         </a>
       </div>
+
     </main >
   )
 }
