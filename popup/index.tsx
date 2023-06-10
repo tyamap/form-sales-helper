@@ -2,12 +2,14 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { sendToContentScript } from "@plasmohq/messaging"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
+import { Config } from "~entities/Config";
 import { useEffect, useState } from "react"
 import "~/style.css"
 
 export default function Popup(): JSX.Element {
   const [basicInfo] = useStorage<BasicInfo>('basic-info')
   const [templates] = useStorage<Templates>('templates')
+  const [config] = useStorage<Config>('config')
   const [showCopied, setShowCopied] = useState(false)
   const [currentURL, setCurrentURL] = useState('')
   const [loading, setLoading] = useState(false)
@@ -34,6 +36,7 @@ export default function Popup(): JSX.Element {
   }
 
   const startAutofillByAI = async () => {
+    if (!config.useAI) return
     setLoading(true)
     const res = await sendToContentScript({
       name: "autofillByAI"
@@ -97,16 +100,18 @@ export default function Popup(): JSX.Element {
           設定
         </button>
       </div>
-      <div>
-        {loading
-          ? <div className="px-4 py-2 mt-2">お待ちください</div>
-          : <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2"
-            onClick={startAutofillByAI}
-          >
-            AI実行(β版)
-          </button>
-        }
-      </div>
+      {config?.useAI &&
+        <div>
+          {loading
+            ? <div className="px-4 py-2 mt-2">お待ちください</div>
+            : <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2"
+              onClick={startAutofillByAI}
+            >
+              AI実行(β版)
+            </button>
+          }
+        </div>
+      }
       <div className="text-right mt-4">
         <a
           className="underline text-gray-400"
