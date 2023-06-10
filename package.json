@@ -12,6 +12,7 @@
   "dependencies": {
     "@plasmohq/messaging": "^0.3.3",
     "@plasmohq/storage": "^1.6.1",
+    "openai": "^3.2.1",
     "plasmo": "0.74.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -1,5 +1,5 @@
 import { useStorage } from "@plasmohq/storage/hook"
-import { sendToBackground, sendToContentScript } from "@plasmohq/messaging"
+import { sendToContentScript } from "@plasmohq/messaging"
 import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
 import { Templates, templatesDisplay } from '~entities/Templates';
 import { useEffect, useState } from "react"
@@ -10,6 +10,7 @@ export default function Popup(): JSX.Element {
   const [templates] = useStorage<Templates>('templates')
   const [showCopied, setShowCopied] = useState(false)
   const [currentURL, setCurrentURL] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -33,10 +34,14 @@ export default function Popup(): JSX.Element {
   }
 
   const startAutofillByAI = async () => {
+    setLoading(true)
     const res = await sendToContentScript({
       name: "autofillByAI"
     })
-    alert(res)
+    if (res) {
+      alert(res)
+      setLoading(false)
+    }
   }
 
   return (
@@ -86,18 +91,21 @@ export default function Popup(): JSX.Element {
         ))}
       </div>
       <div>
-        <button className="bg-teal-500 rounded bg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
+        <button className="bg-teal-500 rounded hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
           onClick={openOptionPage}
         >
           設定
         </button>
       </div>
       <div>
-        <button className="bg-teal-500 rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2"
-          onClick={startAutofillByAI}
-        >
-          AI実行(β版)
-        </button>
+        {loading
+          ? <div className="px-4 py-2 mt-2">お待ちください</div>
+          : <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2"
+            onClick={startAutofillByAI}
+          >
+            AI実行(β版)
+          </button>
+        }
       </div>
       <div className="text-right mt-4">
         <a
