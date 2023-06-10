@@ -16,7 +16,6 @@ export const config: PlasmoCSConfig = {
 }
 
 window.addEventListener("load", async () => {
-  console.log('[FSH]', `Found ${document.forms.length} forms.`)
   if (document.forms.length > 0) {
     const forms = document.forms;
 

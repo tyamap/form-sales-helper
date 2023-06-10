@@ -9,7 +9,7 @@ import { fillAndHighlight } from "~logic/utils";
 
 const configuration = new Configuration({
   // FIXME: OpenAI API KEY は秘匿する必要がある
-  apiKey: "HOGE",
+  apiKey: process.env.PLASMO_PUBLIC_OPENAI_API_KEY || '',
 });
 const openai = new OpenAIApi(configuration);
 
@@ -42,7 +42,7 @@ const AutofillByAI = () => {
             const result = response.data.choices[0].message.content
             const resultJSON = JSON.parse(result) as InputIdentifyQuery
             autofillByAI(resultJSON)
-            alert('[FSH] AI自動入力が完了しました')
+            alert('[FSH] AI自動入力が完了しました\n「OK」を押すと反映されます')
           } else {
             console.error(response.statusText)
             alert(`[FSH] AIリクエストに失敗しました\n\n${response.statusText}`)
@@ -122,13 +122,11 @@ const autofillByAI = async (queryObject: InputIdentifyQuery) => {
  * Form要素から不要な情報を削ぎ落とす（GPT API トークン節約のため）
  */
 const cleanUpFormElement = (formElem: HTMLFormElement) => {
-  console.log(formElem.outerHTML.length, formElem.outerHTML)
   cleanUpAttributes(formElem)
   formElem.querySelectorAll('*').forEach((element) => {
     cleanUpAttributes(element)
   })
   removeUnnecessaryTags(formElem)
-  console.log(formElem.outerHTML.length, formElem.outerHTML)
 }
 
 /** 不要な属性を削除する */
