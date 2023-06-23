@@ -35,6 +35,19 @@ export default function Popup(): JSX.Element {
     chrome.runtime.openOptionsPage()
   }
 
+  // 手動で実行する
+  const startAutofillManually = async () => {
+    setLoading(true)
+    const res = await sendToContentScript({
+      name: "autofillManually"
+    })
+    if (res) {
+      alert(res)
+      setLoading(false)
+    }
+  }
+
+  // AIで実行する
   const startAutofillByAI = async () => {
     if (!config.useAI) return
     setLoading(true)
@@ -50,6 +63,13 @@ export default function Popup(): JSX.Element {
   return (
     <main className="w-[300px] p-4 text-center text-gray-700">
       <h1 className="text-lg mb-2 text-teal-700 font-bold">Form Sales Helper</h1>
+      <div>
+        <button className="bg-teal-500 rounded hover:bg-teal-400 text-white rounded px-4 py-2 mb-4"
+          onClick={openOptionPage}
+        >
+          設定
+        </button>
+      </div>
       {(basicInfo || templates) &&
         <div className="mb-2">
           <p>各項目をクリックで<br />コピーできます</p>
@@ -93,18 +113,16 @@ export default function Popup(): JSX.Element {
           }</>
         ))}
       </div>
-      <div>
-        <button className="bg-teal-500 rounded hover:bg-teal-400 text-white rounded px-4 py-2 mt-2"
-          onClick={openOptionPage}
-        >
-          設定
-        </button>
-      </div>
-      {config?.useAI &&
-        <div>
-          {loading
-            ? <div className="px-4 py-2 mt-2">お待ちください</div>
-            : <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2"
+      {loading
+        ? <div className="px-4 py-2 mt-2">お待ちください</div>
+        : <div>
+          <button className="rounded bg-cyan-500 hover:bg-cyan-400 text-white rounded px-4 py-2 mt-2"
+            onClick={startAutofillManually}
+          >
+            手動実行
+          </button>
+          {config?.useAI &&
+            <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2 ml-2"
               onClick={startAutofillByAI}
             >
               AI実行(β版)
