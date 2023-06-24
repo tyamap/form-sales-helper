@@ -116,13 +116,13 @@ export default function Popup(): JSX.Element {
       {loading
         ? <div className="px-4 py-2 mt-2">お待ちください</div>
         : <div>
-          <button className="rounded bg-cyan-500 hover:bg-cyan-400 text-white rounded px-4 py-2 mt-2"
+          <button className="rounded bg-cyan-500 hover:bg-cyan-400 text-white px-4 py-2 mt-2"
             onClick={startAutofillManually}
           >
             手動実行
           </button>
           {config?.useAI &&
-            <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2 ml-2"
+            <button className="rounded bg-violet-500 hover:bg-violet-400 text-white px-4 py-2 mt-2 ml-2"
               onClick={startAutofillByAI}
             >
               AI実行(β版)
