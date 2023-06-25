@@ -1,6 +1,9 @@
+import { useStorage } from "@plasmohq/storage/hook"
 import cssText from "data-text:~style.css"
 import type { PlasmoCSConfig } from "plasmo"
-import { useRef, useState } from "react"
+import { useState } from "react"
+import { BasicInfo, basicInfoDisplay } from "~entities/BasicInfo"
+import { Templates, templatesDisplay } from "~entities/Templates"
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -17,9 +20,12 @@ const SELECTED_TEXT_ID = 'fsh-selected-text'
 
 const fab = () => {
   const [open, setOpen] = useState(false)
+  const [selected, setSelected] = useState("")
+  const [basicInfo] = useStorage<BasicInfo>('basic-info')
+  const [templates] = useStorage<Templates>('templates')
 
-  // ボタンクリックしたら内容をコピーする
-  const copyContent = (value: string) => {
+  // ボタンクリックしたら内容を保持する
+  const selectContent = (value: string) => {
     if (document.querySelector(`#${SELECTED_TEXT_ID}`)) {
       document.querySelector(`#${SELECTED_TEXT_ID}`)?.remove()
     }
@@ -29,18 +35,63 @@ const fab = () => {
     elem.style.display = 'none'
     elem.textContent = value
     document.body.appendChild(elem)
+    setSelected(value)
+  }
+
+  const handleClose = () => {
+    // テキストを保持する要素があれば削除する
+    if (document.querySelector(`#${SELECTED_TEXT_ID}`)) {
+      document.querySelector(`#${SELECTED_TEXT_ID}`)?.remove()
+    }
+    setSelected("")
+    setOpen(false)
   }
 
   return (
     <div className="fixed bottom-4 right-4">
-      <div className={`absolute bottom-0 right-0 w-64 h-64 p-2 bg-white rounded shadow-lg transform transition-all duration-300 ${open ? 'scale-100' : 'scale-0'}`}>
-        <button className="ml-2" onClick={() => setOpen(false)}>
+      <div className={`absolute bottom-0 right-0 w-64 p-2 bg-white rounded shadow-xl transform transition-all duration-300 ${open ? 'scale-100' : 'scale-0'}`}>
+        <button className="ml-2" onClick={handleClose}>
           X
         </button>
-        <div className="flex flex-col justify-center items-center h-full">
-          <button onClick={() => copyContent('ACTION')}>
-            ACTION
-          </button>
+        <div className="flex flex-wrap gap-2 p-2">
+          <>
+            {basicInfo && basicInfo.familyName && basicInfo.givenName &&
+              <button
+                className={buttonStyle}
+                onClick={() => selectContent(`${basicInfo.familyName} ${basicInfo.givenName}`)}
+              >
+                姓 名
+              </button>
+            }
+            {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => {
+              if (basicInfo && basicInfo[k]) {
+                return (
+                  <button key={k}
+                    className={buttonStyle}
+                    onClick={() => selectContent(basicInfo[k])}
+                  >
+                    {basicInfoDisplay[k]}
+                  </button>
+                )
+              }
+            })}
+            {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => {
+              if (templates && templates[k]) {
+                return (
+                  <button key={k}
+                    className={buttonStyle}
+                    onClick={() => selectContent(templates[k])}
+                  >
+                    {templatesDisplay[k]}
+                  </button>
+                )
+              }
+            })}
+          </>
+        </div>
+        <div className="text-gray-700">
+          <span>選択中: </span>
+          <span>{selected.length <= 16 ? selected : `${selected.substring(0, 16)}...` || '-'}</span>
         </div>
       </div>
       <button className="rounded-full bg-teal-500 hover:bg-teal-400 text-white px-3 py-2"
@@ -54,13 +105,17 @@ const fab = () => {
 
 export default fab;
 
+const buttonStyle = `
+py-1 px-2 rounded border-solid border-2 border-teal-500 text-sm text-gray-700
+`
+
 window.addEventListener("load", () => {
   document.querySelectorAll('input,textarea').forEach((elm) => {
     elm.addEventListener("focus", (e) => {
       const value = document.querySelector(`#${SELECTED_TEXT_ID}`).textContent
       console.log(document.querySelector(`#${SELECTED_TEXT_ID}`))
       const target = e.target as HTMLInputElement
-      target.value = value
+      target.value += value
     })
   })
 })
