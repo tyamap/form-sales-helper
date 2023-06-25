@@ -51,22 +51,22 @@ const fab = () => {
     <div className="fixed bottom-4 right-4">
       <div className={`absolute bottom-0 right-0 w-64 p-2 bg-white rounded shadow-xl transform transition-all duration-300 ${open ? 'scale-100' : 'scale-0'}`}>
         <div className="flex justify-between">
-        <button className="ml-2" onClick={handleClose}>
-          X
-        </button>
-        <button className="ml-2 relative group">?
-          <span
-            className="text-left bg-gray-500 text-white text-xs right-0 rounded p-2 absolute w-72 opacity-0 group-hover:opacity-100 transition pointer-events-none"
+          <button className="ml-2" onClick={handleClose}>
+            X
+          </button>
+          <button className="ml-2 relative group">?
+            <span
+              className="text-left bg-gray-500 text-white text-xs right-0 rounded p-2 absolute w-72 opacity-0 group-hover:opacity-100 transition pointer-events-none"
             >
-            入力したい項目を選択し、フォームの入力欄をクリックすると、選択した項目が入力されます。<br />
-            このモーダルを開いている間のみ、選択した項目が保持されます。<br/>
-            うまくいかない場合はページを再読み込みしてください。
-          </span>
-        </button>
-            </div>
-        <div className="flex flex-wrap gap-2 p-2">
-          <>
-            {basicInfo && basicInfo.familyName && basicInfo.givenName &&
+              入力したい項目を選択し、フォームの入力欄をクリックすると、選択した項目が入力されます。<br />
+              このモーダルを開いている間のみ、選択した項目が保持されます。<br />
+              うまくいかない場合はページを再読み込みしてください。
+            </span>
+          </button>
+        </div>
+        {basicInfo &&
+          <div className="flex flex-wrap gap-2 p-2">
+            {basicInfo.familyName && basicInfo.givenName &&
               <button
                 className={buttonStyle}
                 onClick={() => selectContent(`${basicInfo.familyName} ${basicInfo.givenName}`)}
@@ -74,8 +74,16 @@ const fab = () => {
                 姓 名
               </button>
             }
+            {basicInfo.familyNameKatakana && basicInfo.givenNameKatakana &&
+              <button
+                className={buttonStyle}
+                onClick={() => selectContent(`${basicInfo.familyNameKatakana} ${basicInfo.givenNameKatakana}`)}
+              >
+                セイ メイ
+              </button>
+            }
             {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => {
-              if (basicInfo && basicInfo[k]) {
+              if (basicInfo[k]) {
                 return (
                   <button key={k}
                     className={buttonStyle}
@@ -86,8 +94,12 @@ const fab = () => {
                 )
               }
             })}
+          </div>
+        }
+        {templates &&
+          <div className="flex flex-wrap gap-2 p-2">
             {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => {
-              if (templates && templates[k]) {
+              if (templates[k]) {
                 return (
                   <button key={k}
                     className={buttonStyle}
@@ -98,9 +110,9 @@ const fab = () => {
                 )
               }
             })}
-          </>
-        </div>
-        <div className="text-gray-700">
+          </div>
+        }
+        <div className="text-gray-700 text-xs">
           <span>選択中: </span>
           <span>{selected.length <= 16 ? selected : `${selected.substring(0, 16)}...` || '-'}</span>
         </div>
