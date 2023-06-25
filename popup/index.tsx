@@ -76,18 +76,25 @@ export default function Popup(): JSX.Element {
           <span className={`text-teal-500 ${showCopied ? 'opacity-100' : 'opacity-0'} transition`}>コピーしました</span>
         </div>
       }
-      <div className="mb-4">
-        {basicInfo && basicInfo.familyName && basicInfo.givenName &&
+      {basicInfo && <div className="mb-4">
+        {basicInfo.givenName &&
           <div className="mb-1">
             <button onClick={() => copyContent(`${basicInfo.familyName} ${basicInfo.givenName}`)}>
-              <><span className="opacity-50">名前:</span> {`${basicInfo.familyName} ${basicInfo.givenName}`}</>
+              <><span className="opacity-50">姓名:</span> {`${basicInfo.familyName} ${basicInfo.givenName}`}</>
+            </button>
+          </div>
+        }
+        {basicInfo.familyNameKatakana && basicInfo.givenNameKatakana &&
+          <div className="mb-1">
+            <button onClick={() => copyContent(`${basicInfo.familyNameKatakana} ${basicInfo.givenNameKatakana}`)}>
+              <><span className="opacity-50">セイメイ:</span> {`${basicInfo.familyNameKatakana} ${basicInfo.givenNameKatakana}`}</>
             </button>
           </div>
         }
         {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
-          <>{basicInfo && basicInfo[k] &&
+          <>{basicInfo[k] &&
             <div className="mb-1" key={k}>
-              <button onClick={() => copyContent(basicInfo ? basicInfo[k] : '')}>
+              <button onClick={() => copyContent(basicInfo[k])}>
                 <p className="truncate">
                   <span className="opacity-50">{basicInfoDisplay[k]}:</span>
                   {basicInfo[k].length <= 26 ? basicInfo[k] : `${basicInfo[k].substring(0, 26)}...`}
@@ -96,33 +103,35 @@ export default function Popup(): JSX.Element {
             </div>
           }</>
         ))}
-      </div>
-      <div className="mb-2">
-        {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
-          <>{templates && templates[k] &&
-            <div className="mb-2 relative group" key={k}>
-              <span
-                className="bg-gray-500 text-white rounded p-2 absolute w-72 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none"
-              >
-                {templates[k].length <= 60 ? templates[k] : `${templates[k].substring(0, 60)}...`}
-              </span>
-              <button onClick={() => copyContent(templates ? templates[k] : '')}>
-                <span>{templatesDisplay && templatesDisplay[k]}</span>
-              </button>
-            </div>
-          }</>
-        ))}
-      </div>
+      </div>}
+      {templates &&
+        <div className="mb-2">
+          {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
+            <>{templates[k] &&
+              <div className="mb-2 relative group" key={k}>
+                <span
+                  className="bg-gray-500 text-white rounded p-2 absolute w-72 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none"
+                >
+                  {templates[k].length <= 60 ? templates[k] : `${templates[k].substring(0, 60)}...`}
+                </span>
+                <button onClick={() => copyContent(templates[k])}>
+                  <span>{templatesDisplay && templatesDisplay[k]}</span>
+                </button>
+              </div>
+            }</>
+          ))}
+        </div>
+      }
       {loading
         ? <div className="px-4 py-2 mt-2">お待ちください</div>
         : <div>
-          <button className="rounded bg-cyan-500 hover:bg-cyan-400 text-white rounded px-4 py-2 mt-2"
+          <button className="rounded bg-cyan-500 hover:bg-cyan-400 text-white px-4 py-2 mt-2"
             onClick={startAutofillManually}
           >
             手動実行
           </button>
           {config?.useAI &&
-            <button className="rounded bg-violet-500 hover:bg-violet-400 text-white rounded px-4 py-2 mt-2 ml-2"
+            <button className="rounded bg-violet-500 hover:bg-violet-400 text-white px-4 py-2 mt-2 ml-2"
               onClick={startAutofillByAI}
             >
               AI実行(β版)
