@@ -50,9 +50,20 @@ const fab = () => {
   return (
     <div className="fixed bottom-4 right-4">
       <div className={`absolute bottom-0 right-0 w-64 p-2 bg-white rounded shadow-xl transform transition-all duration-300 ${open ? 'scale-100' : 'scale-0'}`}>
+        <div className="flex justify-between">
         <button className="ml-2" onClick={handleClose}>
           X
         </button>
+        <button className="ml-2 relative group">?
+          <span
+            className="text-left bg-gray-500 text-white text-xs right-0 rounded p-2 absolute w-72 opacity-0 group-hover:opacity-100 transition pointer-events-none"
+            >
+            入力したい項目を選択し、フォームの入力欄をクリックすると、選択した項目が入力されます。<br />
+            このモーダルを開いている間のみ、選択した項目が保持されます。<br/>
+            うまくいかない場合はページを再読み込みしてください。
+          </span>
+        </button>
+            </div>
         <div className="flex flex-wrap gap-2 p-2">
           <>
             {basicInfo && basicInfo.familyName && basicInfo.givenName &&
