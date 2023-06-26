@@ -91,8 +91,8 @@ export default function Popup(): JSX.Element {
             </button>
           </div>
         }
-        {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => (
-          <>{basicInfo[k] &&
+        {(Object.keys(basicInfoDisplay) as (keyof BasicInfo)[]).map((k) => {
+          if (basicInfo[k]) return (
             <div className="mb-1" key={k}>
               <button onClick={() => copyContent(basicInfo[k])}>
                 <p className="truncate">
@@ -100,14 +100,13 @@ export default function Popup(): JSX.Element {
                   {basicInfo[k].length <= 26 ? basicInfo[k] : `${basicInfo[k].substring(0, 26)}...`}
                 </p>
               </button>
-            </div>
-          }</>
-        ))}
+            </div>)
+        })}
       </div>}
       {templates &&
         <div className="mb-2">
-          {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => (
-            <>{templates[k] &&
+          {(Object.keys(templatesDisplay) as (keyof Templates)[]).map((k) => {
+            if (templates[k]) return (
               <div className="mb-2 relative group" key={k}>
                 <span
                   className="bg-gray-500 text-white rounded p-2 absolute w-72 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none"
@@ -118,8 +117,8 @@ export default function Popup(): JSX.Element {
                   <span>{templatesDisplay && templatesDisplay[k]}</span>
                 </button>
               </div>
-            }</>
-          ))}
+            )
+          })}
         </div>
       }
       {loading
