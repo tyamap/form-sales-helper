@@ -1,9 +1,12 @@
+import { useMessage } from "@plasmohq/messaging/hook"
 import { useStorage } from "@plasmohq/storage/hook"
 import cssText from "data-text:~style.css"
 import type { PlasmoCSConfig } from "plasmo"
 import { useState } from "react"
 import { BasicInfo, basicInfoDisplay } from "~entities/BasicInfo"
 import { Templates, templatesDisplay } from "~entities/Templates"
+import { autofill } from "~logic/autofill"
+import { autofillByAI } from "~logic/autofillByAI"
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -23,6 +26,15 @@ const fab = () => {
   const [selected, setSelected] = useState("")
   const [basicInfo] = useStorage<BasicInfo>('basic-info')
   const [templates] = useStorage<Templates>('templates')
+
+  useMessage(async (req, _res) => {
+    if (document.forms.length === 0) return
+    if (req.name === 'autofillManually') {
+      autofill()
+    } else if (req.name === 'autofillByAI') {
+      autofillByAI()
+    }
+  })
 
   // ボタンクリックしたら内容を保持する
   const selectContent = (value: string) => {

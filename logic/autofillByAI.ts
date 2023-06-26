@@ -1,6 +1,6 @@
-import { useMessage } from "@plasmohq/messaging/hook"
 import { Storage } from "@plasmohq/storage"
 import { Configuration, OpenAIApi } from "openai";
+import { resolve } from "path";
 import { BasicInfo } from "~entities/BasicInfo";
 import { Config } from "~entities/Config";
 import { InputIdentifyQuery } from "~entities/InputIdentifyQuery";
@@ -13,61 +13,43 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const AutofillByAI = () => {
-  useMessage(async (req, res) => {
-    if (req.name === 'autofillByAI') {
-      try {
-        const formElem = document.forms[0]
-        if (formElem) {
-          // ページの要素を書き換えないように、要素を複製して扱う
-          const copy = formElem.cloneNode(true) as HTMLFormElement
-          cleanUpFormElement(copy)
-          // GPTリクエストAPIを実行
-          const defaultText = `I will give you a string representing form tag. 
-          Please tell me the JavaScript querySelector function parameter strings that can be used to retrieve the input elements for "Name", "Family Name", "Given Name", "Email Address", "Organization Name",  "Department", "Phone Number", and "Inquiry Content" from the following form tag. If an input field for a specific item is not present, the query should be .
-          Please return the response in the following JSON format without any extra text:
-          {"nameInput": null, familyNameInput": null, "givenNameInput": null, "emailInput": null, "organizationInput": null, "departmentInput": null, "phoneNumberInput": null, "inquiryInput": null}
-          
-          `
-          const inputText = copy.outerHTML
-          const response = await openai.createChatCompletion({
-            model: "gpt-3.5-turbo",
-            temperature: 0,
-            max_tokens: 200,
-            messages: [
-              { role: "user", content: `${defaultText} ${inputText}` },
-            ],
-          })
-          if (response.status === 200) {
-            const result = response.data.choices[0].message.content
-            const resultJSON = JSON.parse(result) as InputIdentifyQuery
-            autofillByAI(resultJSON)
-            alert('[FSH] AI自動入力が完了しました\n「OK」を押すと反映されます')
-          } else {
-            console.error(response.statusText)
-            alert(`[FSH] AIリクエストに失敗しました\n\n${response.statusText}`)
-          }
-        } else {
-          alert('問合せフォームが見つかりません')
-        }
-      } catch (error) {
-        if (error.response) {
-          console.error('[FSH]', error.response.data)
-          alert(`[FSH] AI通信に失敗しました\n\n${error.response.status}\n${error.response.data.error.code}`)
-        } else {
-          alert(`[FSH] AIページ解析に失敗しました\n\n${error.response.message}`)
-        }
-      } finally {
-        res.send('AI実行が終了しました')
-      }
-    }
+export const autofillByAI = async () => {
+  const formElem = document.forms[0]
+  // ページの要素を書き換えないように、要素を複製して扱う
+  const copy = formElem.cloneNode(true) as HTMLFormElement
+  cleanUpFormElement(copy)
+  // GPTリクエストAPIを実行
+  const defaultText = `I will give you a string representing form tag. 
+    Please tell me the JavaScript querySelector function parameter strings that can be used to retrieve the input elements for "Name", "Family Name", "Given Name", "Email Address", "Organization Name",  "Department", "Phone Number", and "Inquiry Content" from the following form tag. If an input field for a specific item is not present, the query should be .
+    Please return the response in the following JSON format without any extra text:
+    {"nameInput": null, familyNameInput": null, "givenNameInput": null, "emailInput": null, "organizationInput": null, "departmentInput": null, "phoneNumberInput": null, "inquiryInput": null}
+    
+    `
+  const inputText = copy.outerHTML
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    temperature: 0,
+    max_tokens: 200,
+    messages: [
+      { role: "user", content: `${defaultText} ${inputText}` },
+    ],
   })
+  if (response.status === 200) {
+    const result = response.data.choices[0].message.content
+    const resultJSON = JSON.parse(result) as InputIdentifyQuery
+    executeAutofillByAI(resultJSON)
+    alert('[FSH] AI自動入力が完了しました\n「OK」を押すと反映されます')
+  } else {
+    console.error(response.statusText)
+    alert(`[FSH] AIリクエストに失敗しました\n\n${response.statusText}`)
+  }
+  resolve()
 }
 
 /**
  * AI返答を元に自動入力を実行
  */
-const autofillByAI = async (queryObject: InputIdentifyQuery) => {
+const executeAutofillByAI = async (queryObject: InputIdentifyQuery) => {
   const storage = new Storage()
   const basicInfo = await storage.get("basic-info") as BasicInfo
   const templates = await storage.get("templates") as Templates
@@ -159,5 +141,3 @@ const removeUnnecessaryTags = (formElem: HTMLFormElement) => {
   })
 
 }
-
-export default AutofillByAI

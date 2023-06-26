@@ -38,26 +38,24 @@ export default function Popup(): JSX.Element {
   // 手動で実行する
   const startAutofillManually = async () => {
     setLoading(true)
-    const res = await sendToContentScript({
+    await sendToContentScript({
       name: "autofillManually"
     })
-    if (res) {
-      alert(res)
-      setLoading(false)
-    }
+    setLoading(false)
   }
 
   // AIで実行する
   const startAutofillByAI = async () => {
     if (!config.useAI) return
     setLoading(true)
-    const res = await sendToContentScript({
+    await sendToContentScript({
       name: "autofillByAI"
     })
-    if (res) {
-      alert(res)
+    // 7秒待つ
+    // FIXME: APIレスポンスを待つようにしたい
+    setTimeout(() => {
       setLoading(false)
-    }
+    }, 7000)
   }
 
   return (

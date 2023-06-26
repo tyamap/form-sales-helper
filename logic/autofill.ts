@@ -9,6 +9,7 @@ import { autofillName } from "~logic/autofillName";
 import { autofillOrganization } from "~logic/autofillOrganization";
 import { autofillTel } from "~logic/autofillTel";
 import { autofillTemplate } from "~logic/autofillTemplate";
+import { resolve } from "path";
 
 export const autofill = async () => {
   const forms = document.forms;
@@ -48,6 +49,6 @@ export const autofill = async () => {
     if (config?.autoCheck) {
       autocheckTerms(form)
     }
-
   })
+  resolve()
 }
