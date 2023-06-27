@@ -13,11 +13,11 @@ export default function Options(): JSX.Element {
   const [basicInfo, setBasicInfo] = useStorage<BasicInfo>('basic-info')
   const [templates, setTemplates] = useStorage<Templates>('templates')
   const [config, setConfig] = useStorage<Config>('config')
-  const form = useForm<OptionForm>({ defaultValues: { ...basicInfo, ...templates } })
+  const form = useForm<OptionForm>({ defaultValues: { ...basicInfo, ...templates, ...config } })
 
   useEffect(() => {
     form.reset({ ...basicInfo, ...templates, ...config })
-  }, [basicInfo, templates])
+  }, [basicInfo, templates, config])
 
   const onSubmit = (data: OptionForm) => {
     setBasicInfo(data)
@@ -75,6 +75,14 @@ export default function Options(): JSX.Element {
             <span className="mr-2">AI実行ボタン(β版)を使う</span>
             <input type="checkbox" className="sr-only peer" {...form.register('useAI')} />
             <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[18px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-400"></div>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label>
+            <span className="mr-2">ボタンを表示しないページのドメイン（改行区切り）</span>
+            <div>
+              <textarea className="w-80 h-40 border border-gray-400 rounded px-2 py-1" {...form.register('excludeDomains')} />
+            </div>
           </label>
         </div>
         <button className='bg-teal-500 hover:bg-teal-400 text-white rounded px-4 py-2' type="submit">保存</button>
