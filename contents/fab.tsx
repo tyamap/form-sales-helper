@@ -63,7 +63,7 @@ const fab = () => {
     setOpen(false)
   }
 
-  if (config.excludeDomains.split('\n').some((domain) => hostname.includes(domain))) {
+  if (!config || config.excludeDomains.split('\n').some((domain) => hostname.includes(domain))) {
     return <></>
   } else {
     return (
