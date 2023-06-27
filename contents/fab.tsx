@@ -16,7 +16,7 @@ export const getStyle = () => {
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
-  all_frames: true
+  all_frames: false,
 }
 
 const SELECTED_TEXT_ID = 'fsh-selected-text'
