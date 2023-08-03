@@ -1,10 +1,10 @@
 import { Storage } from "@plasmohq/storage"
 import { Configuration, OpenAIApi } from "openai";
 import { resolve } from "path";
-import { BasicInfo } from "~entities/BasicInfo";
-import { Config } from "~entities/Config";
-import { InputIdentifyQuery } from "~entities/InputIdentifyQuery";
-import { Templates } from "~entities/Templates";
+import { type BasicInfo } from "~entities/BasicInfo";
+import { type Config } from "~entities/Config";
+import { type InputIdentifyQuery } from "~entities/InputIdentifyQuery";
+import { type Templates } from "~entities/Templates";
 import { fillAndHighlight } from "~logic/utils";
 
 const configuration = new Configuration({

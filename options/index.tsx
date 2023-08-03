@@ -2,9 +2,9 @@
 import { useEffect } from 'react'
 import { useForm } from "react-hook-form";
 import { useStorage } from "@plasmohq/storage/hook"
-import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
-import { Templates, templatesDisplay } from '~entities/Templates';
-import { Config } from '~entities/Config';
+import { type BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
+import { type Templates, templatesDisplay } from '~entities/Templates';
+import { type Config } from '~entities/Config';
 import "~/style.css"
 
 type OptionForm = BasicInfo & Templates & Config

@@ -1,8 +1,8 @@
 import { useStorage } from "@plasmohq/storage/hook"
 import { sendToContentScript } from "@plasmohq/messaging"
-import { BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
-import { Templates, templatesDisplay } from '~entities/Templates';
-import { Config } from "~entities/Config";
+import { type BasicInfo, basicInfoDisplay } from '~entities/BasicInfo';
+import { type Templates, templatesDisplay } from '~entities/Templates';
+import { type Config } from "~entities/Config";
 import { useEffect, useState } from "react"
 import "~/style.css"
 
