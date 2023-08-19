@@ -44,19 +44,19 @@ export default function Popup(): JSX.Element {
     setLoading(false)
   }
 
-  // AIで実行する
-  const startAutofillByAI = async () => {
-    if (!config.useAI) return
-    setLoading(true)
-    await sendToContentScript({
-      name: "autofillByAI"
-    })
-    // 7秒待つ
-    // FIXME: APIレスポンスを待つようにしたい
-    setTimeout(() => {
-      setLoading(false)
-    }, 7000)
-  }
+  // // AIで実行する
+  // const startAutofillByAI = async () => {
+  //   if (!config.useAI) return
+  //   setLoading(true)
+  //   await sendToContentScript({
+  //     name: "autofillByAI"
+  //   })
+  //   // 7秒待つ
+  //   // FIXME: APIレスポンスを待つようにしたい
+  //   setTimeout(() => {
+  //     setLoading(false)
+  //   }, 7000)
+  // }
 
   return (
     <main className="w-[300px] p-4 text-center text-gray-700">
@@ -127,13 +127,13 @@ export default function Popup(): JSX.Element {
           >
             手動実行
           </button>
-          {config?.useAI &&
+          {/* {config?.useAI &&
             <button className="rounded bg-violet-500 hover:bg-violet-400 text-white px-4 py-2 mt-2 ml-2"
               onClick={startAutofillByAI}
             >
               AI実行(β版)
             </button>
-          }
+          } */}
         </div>
       }
       <div className="text-right mt-4">

@@ -7,7 +7,7 @@ import { type BasicInfo, basicInfoDisplay } from "~entities/BasicInfo"
 import { type Config } from "~entities/Config"
 import { type Templates, templatesDisplay } from "~entities/Templates"
 import { autofill } from "~logic/autofill"
-import { autofillByAI } from "~logic/autofillByAI"
+// import { autofillByAI } from "~logic/autofillByAI"
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -35,9 +35,10 @@ const fab = () => {
     if (document.forms.length === 0) return
     if (req.name === 'autofillManually') {
       autofill()
-    } else if (req.name === 'autofillByAI') {
-      autofillByAI()
     }
+    // else if (req.name === 'autofillByAI') {
+    //   autofillByAI()
+    // }
   })
 
   // ボタンクリックしたら内容を保持する

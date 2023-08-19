@@ -69,14 +69,14 @@ export default function Options(): JSX.Element {
             ))}
           </select>
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <p>サイトの情報を OpenAI API に送信することに同意して</p>
           <label className="relative inline-flex items-center mb-5 cursor-pointer">
             <span className="mr-2">AI実行ボタン(β版)を使う</span>
             <input type="checkbox" className="sr-only peer" {...form.register('useAI')} />
             <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[18px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-400"></div>
           </label>
-        </div>
+        </div> */}
         <div className="mb-4">
           <label>
             <span className="mr-2">ボタンを表示しないページのドメイン（改行区切り）</span>
