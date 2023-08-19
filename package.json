@@ -1,7 +1,7 @@
 {
   "name": "form-sales-helper",
   "displayName": "Form sales helper",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "問合せ営業を効率化するChrome拡張機能",
   "author": "tyamap",
   "scripts": {
